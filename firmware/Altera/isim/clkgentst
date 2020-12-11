@@ -1,0 +1,6 @@
+
+restart
+
+isim force add clock 0 -value 1 -time 4ns -repeat 8ns
+isim force add Reset 1 -value 0 -time 100ns
+

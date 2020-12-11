@@ -1,0 +1,145 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, the Altera Quartus II License Agreement,
+# the Altera MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Altera and sold by Altera or its 
+# authorized distributors.  Please refer to the applicable 
+# agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 14.0.2 Build 209 09/17/2014 SJ Web Edition
+# Date created = 08:56:09  July 15, 2016
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		RFInerlockRTM_a_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "MAX V"
+set_global_assignment -name DEVICE 5M2210ZF256C5
+set_global_assignment -name TOP_LEVEL_ENTITY RFInterlockRTM_a
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 14.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:56:09  JULY 15, 2016"
+set_global_assignment -name LAST_QUARTUS_VERSION 14.0
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR "-1"
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
+set_global_assignment -name VHDL_FILE ../vhdl/qspi.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/ModTrigger.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/SLEDInterface.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/RFInterlockRTM_a.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/FastFaultInterface.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/DeBouncer.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/ClkEn_Gen.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/RegIntf.vhd
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+
+
+set_location_assignment PIN_H12 -to Clock
+
+# --SPI Interface
+
+set_location_assignment PIN_N2 -to Cmd_SDO
+set_location_assignment PIN_M3 -to Cmd_SDI
+set_location_assignment PIN_N3 -to n_Cmd_CS
+set_location_assignment PIN_J12 -to Cmd_Clk
+
+# --Fast Signal Comparator inputs
+set_location_assignment PIN_G5 -to n_Beam_I_Under
+set_location_assignment PIN_H1 -to Beam_I_Over
+set_location_assignment PIN_H3 -to Beam_V_Over
+set_location_assignment PIN_J1 -to Fwd_Over
+set_location_assignment PIN_H5 -to Refl_Over
+
+# --SLED Interface Signals
+#set_location_assignment PIN_J5 -to n_Motor_Not_Detuned
+#set_location_assignment PIN_J3 -to n_Motor_Not_Tuned
+#set_location_assignment PIN_H4 -to n_Lower_Detuned
+#set_location_assignment PIN_J2 -to n_Lower_Tuned
+#set_location_assignment PIN_J4 -to n_Upper_Tuned
+#set_location_assignment PIN_K1 -to n_Upper_Detuned
+
+set_location_assignment PIN_J5 -to n_Motor_Not_tuned
+set_location_assignment PIN_J3 -to n_Lower_Tuned
+set_location_assignment PIN_H4 -to n_Upper_Detuned
+set_location_assignment PIN_J2 -to n_Lower_DeTuned
+set_location_assignment PIN_J4 -to n_Motor_Not_Detuned
+set_location_assignment PIN_K1 -to n_Upper_Tuned
+
+# --SLED Tune/Detune Request
+set_location_assignment PIN_F11 -to Tune_P
+set_location_assignment PIN_E16 -to Tune_M
+set_location_assignment PIN_F12 -to Tune_En
+
+set_location_assignment PIN_F13 -to DeTune_P
+set_location_assignment PIN_D16 -to DeTune_M
+set_location_assignment PIN_F14 -to DeTune_En
+# --Control Output
+
+set_location_assignment PIN_K2 -to n_Tune
+set_location_assignment PIN_K5 -to n_DeTune
+
+# --Modulator Interface
+
+set_location_assignment PIN_L2 -to n_Mod_Trigger
+set_location_assignment PIN_K3 -to Mod_Fault
+set_location_assignment PIN_M1 -to n_Ext_Intlk
+
+# --Timing
+set_location_assignment PIN_M2 -to Mod_Trigger
+set_location_assignment PIN_L4 -to sssb_Trigger
+
+# --Spares
+set_location_assignment PIN_D14 -to Mod_Status
+set_location_assignment PIN_E13 -to N_MOD_SPARE_OUT
+
+
+# --AMC Interface
+
+
+# --Carrier Interface
+
+set_location_assignment PIN_N1 -to FaultOut
+
+set_location_assignment PIN_C14 -to ClrFault
+
+set_location_assignment PIN_L3 -to RFOFF
+set_location_assignment PIN_M4 -to RFON_AMC
+set_location_assignment PIN_C15 -to ByPass
+
+
+set_location_assignment PIN_A10 -to TestPoint[0]
+set_location_assignment PIN_A9 -to TestPoint[1]
+set_location_assignment PIN_A8 -to TestPoint[2]
+set_location_assignment PIN_A7 -to TestPoint[3]
+
+set_global_assignment -name VHDL_FILE ../vhdl/TrigPermit.vhd
+set_global_assignment -name VHDL_FILE ../vhdl/SysInfo.vhd
+set_global_assignment -name CDF_FILE output_files/RFInterlockRTM.cdf
+set_global_assignment -name CDF_FILE output_files/Chain2.cdf
