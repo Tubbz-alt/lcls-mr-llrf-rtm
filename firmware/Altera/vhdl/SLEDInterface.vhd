@@ -8,7 +8,7 @@
 --
 --  Author: JEFF OLSEN
 --  Created on: 12/2011
---  Last change: JO 7/14/2016 11:26:05 AM
+--  Last change: JPS 4/18/2018 2:37:17 PM
 --
 --
 
@@ -22,6 +22,7 @@ port (
     Clock				: in std_logic;
     DeBounceEn			: in std_logic;
 	 TimeOutEn			: in std_logic;
+	 Clk120HzEn    	: in std_logic;
 	 Reset				: in std_logic;
 	 ClrFault			: in std_logic;
 
@@ -36,6 +37,8 @@ port (
 -- SLED Tune/Detune Request
     TuneReq				: in std_logic;
     DeTuneReq			: in std_logic;
+	 SLED_AC_Out_P		: out std_logic;
+	 SLED_AC_Out_M		: out std_logic;
 
 -- Control Output
     Tune					: out std_logic;
@@ -74,7 +77,8 @@ architecture Behaviour of SLEDInterface is
 	signal DeTuneReqSr					: std_logic_vector(1 downto 0);
 
 	signal iSLEDFault						: std_logic;
-	
+	signal iSLED_AC_Out_P				: std_logic;
+	signal iSLED_AC_Out_M				: std_logic;
 	
 begin
 
@@ -94,6 +98,52 @@ DbMotorNotDeTuned 	<= DbSLEDStatusVector(0);
 Tune						<= Tuning;
 DeTune					<= DeTuning;
 
+
+SLED_AC_Out_P	<= iSLED_AC_Out_P;
+SLED_AC_Out_M 	<= iSLED_AC_Out_M;
+
+GenAc_p : process(Clock, Reset)
+begin
+if (Reset = '1') then
+	iSLED_AC_Out_P	<= '0';
+	iSLED_AC_Out_M	<= '0';
+elsif (Clock'event and Clock = '1') then
+-----------------------------------------------------------------------------------
+----------------------------------------------- Use this code block for TESTING 10 VAC output
+	if (Clk120HzEn = '1') then
+			iSLED_AC_Out_P <= not(iSLED_AC_Out_P);
+			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+	end if;
+-------------------------------------------------------------------------- 
+-----------------------------------------------Use the code block below for OPERATION
+------------------------------------------ original operational code (bug?)
+--	if (Clk120HzEn = '1') then
+--	if ((Tuning = '1') or (DeTuning = '1')) then
+--			iSLED_AC_Out_P <= not(iSLED_AC_Out_P);
+--			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+--		end if;
+--	else
+--		iSLED_AC_Out_P	<= '0';
+--		iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+--	end if;
+----------------------------------------------
+-------------------------------- Modified code for OPERATION -- John Sikora June 14, 2018
+--
+--	if (Clk120HzEn = '1') then
+--		if ((Tuning = '1') or (DeTuning = '1')) then
+--			iSLED_AC_Out_P <= not(iSLED_AC_Out_P);
+--			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+--		else
+--			iSLED_AC_Out_P	<= '0';
+--			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+--		end if;
+--	else
+--
+--	end if;
+-----------------------------------------------
+---------------------------------------------------------------------------------- 
+end if;
+end process;
 
 latchSled : for i in 0 to 5 generate
 DeBounce : entity work.DeBouncer
@@ -135,9 +185,13 @@ if (Reset = '1') then
 	SLEDTimeOut 	<= '0';
 elsif (Clock'event and Clock = '1') then
 
-	 TuneReqSr		<= TuneReqSr(0)	& (TuneReq and NOT(DbSLEDTuned));
-	 DeTuneReqSr	<= DeTuneReqSr(0) & (DeTuneReq and Not(DbSLEDDeTuned));
-
+--------------Original code ---------------
+	TuneReqSr		<= TuneReqSr(0)	& (TuneReq and NOT(DbSLEDTuned));
+	DeTuneReqSr	<= DeTuneReqSr(0) & (DeTuneReq and Not(DbSLEDDeTuned));
+	
+	 
+	 
+	 
     if ((SLEDTimeOut = '1') or (DbSLEDTuned = '1') or (ClrFault = '1')) then
 		  Tuning		<= '0';
     elsif (TuneReqSr = "01") then
@@ -145,7 +199,7 @@ elsif (Clock'event and Clock = '1') then
 		  DeTuning	<= '0';
     end if;
 
-    if ((SLEDTimeOut = '1') or (DbSLEDDeTuned = '1') or (ClrFault = '1')) then
+	 if ((SLEDTimeOut = '1') or (DbSLEDDeTuned = '1') or (ClrFault = '1')) then
 		  DeTuning	<= '0';
     elsif (DeTuneReqSr = "01") then
         Tuning		<= '0';
@@ -154,7 +208,7 @@ elsif (Clock'event and Clock = '1') then
 
 	if ((Tuning = '1') or (DeTuning = '1')) then
 		if (TimeOutEn = '1') then
-			if (TimeOutCntr /= x"13") then
+			if (TimeOutCntr /= x"63") then
 				TimeOutCntr <= TimeOutCntr + 1;
 			else
 				SLEDTimeOut <= '1';

@@ -8,7 +8,7 @@
 --
 --  Author: JEFF OLSEN
 --
---  Last change: JO 7/14/2016 4:51:46 PM
+--  Last change: JO 1/9/2018 7:56:50 AM
 --
 --
 
@@ -26,10 +26,10 @@ entity FastFaultInterface is
 	BeamUnderEn		: in std_logic;
 
 -- Fast Signal Comparator inputs
-	Beam_I_Under 	: in std_logic;
+--	Beam_I_Under 	: in std_logic;
 	Beam_I_Over		: in std_logic;
 	Beam_V_Over		: in std_logic;
-	Fwd_Over			: in std_logic;
+--	Fwd_Over			: in std_logic;
 	Refl_Over		: in std_logic;
 
 	FaultVectorOut	: out std_logic_vector(4 downto 0);
@@ -51,7 +51,13 @@ signal BeamUnderCntr			: std_logic_vector(11 downto 0);
 
 begin
 
-FastFaultVector 	<= Beam_I_Under & Beam_I_Over & Beam_V_Over & Fwd_Over & Refl_Over;
+-- jjo 1/9/18
+-- Remove Beam I under
+-- and RF Forward
+--
+
+--FastFaultVector 	<= Beam_I_Under & Beam_I_Over & Beam_V_Over & Fwd_Over & Refl_Over;
+FastFaultVector 	<= '0' & Beam_I_Over & Beam_V_Over & '0' & Refl_Over;
 FaultOut				<= iFaultOut;
 FaultVectorOut		<= iFaultVectorOut;
 BeamUnderI			<= DbFastFaultVector(4);
@@ -85,7 +91,9 @@ elsif (Clock'event and Clock = '1') then
 		iFaultVectorOut(4 downto 0) 	<= (Others => '0');
 		iFaultOut 			<= '0';
 	end if;
-	
+--
+-- Beam Under is forced low
+--
 	if ((BeamUnderI = '0') or (ClrFault = '1'))then
 		BeamUnderCntr 	<= (Others => '0');
 		BeamUnder		<= '0';

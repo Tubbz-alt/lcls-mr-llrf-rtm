@@ -8,7 +8,7 @@
 --
 --	Author: JEFF OLSEN
 --	Created on: 3/11/2011 12:08:09 PM
---	Last change: JO 11/21/2016 3:10:53 PM
+--	Last change: JO 3/15/2017 11:17:42 AM
 --
 
 library IEEE;
@@ -41,10 +41,10 @@ end SysInfo;
 
 architecture behaviour of SysInfo is
 
-	constant Version				: std_logic_vector(15 downto 0)	:= x"0006";
+	constant Version				: std_logic_vector(15 downto 0)	:= x"0003";
 	constant System_ID			: string(8 downto 1) 				:= "LLRF    ";
 	constant SubType_ID			: string(8 downto 1) 				:= "INTLKRTM";
-	constant Date_ID				: string(8 downto 1) 				:= "12/07/16";
+	constant Date_ID				: string(8 downto 1) 				:= "03/21/18";
 
 	function Character_to_StdLogicVector(MyString : in character) return std_logic_vector;
 

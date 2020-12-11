@@ -2,13 +2,13 @@
 --                                                             --
 -----------------------------------------------------------------
 --
---  ModTrigger.vhd -
+--  ModFlt.vhd -
 --
---  Copyright(c) Stanford Linear Accelerator Center  2000
+--  Copyright(c) Stanford Linear Accelerator Center 2000
 --
 --  Author: JEFF OLSEN
 
---  Last change: JO 11/21/2016 3:10:30 PM
+--  Last change: JO 1/8/2018 2:22:30 PM
 --
 
 
@@ -16,7 +16,7 @@ Library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
-Entity ModTrigger is
+Entity ModFlt is
 Port (
 	Clock 				: in std_logic;
 	Reset 				: in std_logic;
@@ -24,9 +24,9 @@ Port (
 	ModFault				: in std_logic;
 	ModFaultOut			: out std_logic
 	);
-end ModTrigger;
+end ModFlt;
 
-Architecture Behaviour of ModTrigger is
+Architecture Behaviour of ModFlt is
 
 signal dbModFaultOut : std_logic;
 
