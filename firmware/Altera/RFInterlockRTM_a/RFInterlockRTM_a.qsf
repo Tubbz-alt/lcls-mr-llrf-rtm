@@ -1,18 +1,18 @@
 # -------------------------------------------------------------------------- #
 #
 # Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
-# Your use of Altera Corporation's design tools, logic functions
-# and other software and tools, and its AMPP partner logic
-# functions, and any output files from any of the foregoing
-# (including device programming or simulation files), and any
-# associated documentation or information are expressly subject
-# to the terms and conditions of the Altera Program License
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
 # Subscription Agreement, the Altera Quartus II License Agreement,
-# the Altera MegaCore Function License Agreement, or other
-# applicable license agreement, including, without limitation,
-# that your use is for the sole purpose of programming logic
-# devices manufactured by Altera and sold by Altera or its
-# authorized distributors.  Please refer to the applicable
+# the Altera MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Altera and sold by Altera or its 
+# authorized distributors.  Please refer to the applicable 
 # agreement for further details.
 #
 # -------------------------------------------------------------------------- #
@@ -26,7 +26,7 @@
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		RFInterlockRTM_a_assignment_defaults.qdf
+#		RFInerlockRTM_a_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -40,8 +40,8 @@
 set_global_assignment -name FAMILY "MAX V"
 set_global_assignment -name DEVICE 5M2210ZF256C5
 set_global_assignment -name TOP_LEVEL_ENTITY RFInterlockRTM_a
-set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.1.0
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:53:34  JUNE 14, 2018"
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 14.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:56:09  JULY 15, 2016"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -130,6 +130,14 @@ set_location_assignment PIN_A8 -to TestPoint[2]
 set_location_assignment PIN_A7 -to TestPoint[3]
 
 
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to SLED_AC_Out_M
+set_instance_assignment -name SLEW_RATE 0 -to SLED_AC_Out_M
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to SLED_AC_Out_P
+set_instance_assignment -name SLEW_RATE 0 -to SLED_AC_Out_P
+
+set_global_assignment -name IP_SEARCH_PATHS "c:\\users\\jjo\\onedrive - slac national accelerator laboratory\\tid_air\\projects\\missionreadiness\\rfinterlocks\\altera_c02\\rfinterlockrtm_a\\pwr_lkup\\synthesis;c:\\users\\jjo\\onedrive - slac national accelerator laboratory\\tid_air\\projects\\missionreadiness\\rfinterlocks\\altera_c02\\rfinterlockrtm_a\\pwr_lkup"
+set_global_assignment -name SIP_FILE PWM_Lkup/simulation/PWM_Lkup.sip
+set_global_assignment -name QIP_FILE PWM_Lkup/synthesis/PWM_Lkup.qip
 set_global_assignment -name VHDL_FILE ../vhdl/ModFlt.vhd
 set_global_assignment -name VHDL_FILE ../vhdl/qspi.vhd
 set_global_assignment -name VHDL_FILE ../vhdl/SLEDInterface.vhd
@@ -144,7 +152,7 @@ set_global_assignment -name CDF_FILE output_files/RFInterlockRTM.cdf
 set_global_assignment -name CDF_FILE output_files/Chain2.cdf
 set_global_assignment -name CDF_FILE Chain4.cdf
 set_global_assignment -name CDF_FILE output_files/Chain1.cdf
-set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to SLED_AC_Out_M
-set_instance_assignment -name SLEW_RATE 0 -to SLED_AC_Out_M
-set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to SLED_AC_Out_P
-set_instance_assignment -name SLEW_RATE 0 -to SLED_AC_Out_P
+set_global_assignment -name CDF_FILE output_files/test1.cdf
+set_global_assignment -name CDF_FILE output_files/test.cdf
+set_global_assignment -name CDF_FILE output_files/RFInerlockRTM_a.cdf
+set_global_assignment -name CDF_FILE output_files/ufm.cdf

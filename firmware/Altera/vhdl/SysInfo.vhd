@@ -26,6 +26,10 @@ library work;
 --
 
 
+-- jjo 6/18/19
+-- Version 4, added PWM to SLED output Driver
+-- 
+
 entity SysInfo is
 Port (
 	Clock						: in std_logic;
@@ -41,10 +45,10 @@ end SysInfo;
 
 architecture behaviour of SysInfo is
 
-	constant Version				: std_logic_vector(15 downto 0)	:= x"0003";
+	constant Version				: std_logic_vector(15 downto 0)	:= x"0004";
 	constant System_ID			: string(8 downto 1) 				:= "LLRF    ";
 	constant SubType_ID			: string(8 downto 1) 				:= "INTLKRTM";
-	constant Date_ID				: string(8 downto 1) 				:= "03/21/18";
+	constant Date_ID				: string(8 downto 1) 				:= "06/18/18";
 
 	function Character_to_StdLogicVector(MyString : in character) return std_logic_vector;
 

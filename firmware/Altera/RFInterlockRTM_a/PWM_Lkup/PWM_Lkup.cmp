@@ -1,0 +1,10 @@
+	component PWM_Lkup is
+		port (
+			addr       : in  std_logic_vector(8 downto 0)  := (others => 'X'); -- addr
+			data_valid : out std_logic;                                        -- data_valid
+			dataout    : out std_logic_vector(15 downto 0);                    -- dataout
+			nbusy      : out std_logic;                                        -- nbusy
+			nread      : in  std_logic                     := 'X'              -- nread
+		);
+	end component PWM_Lkup;
+

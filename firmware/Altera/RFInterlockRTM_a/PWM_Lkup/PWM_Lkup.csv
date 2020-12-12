@@ -1,0 +1,18 @@
+# system info PWM_Lkup on 2019.06.17.11:36:49
+system_info:
+name,value
+DEVICE,5M2210ZF256C5
+DEVICE_FAMILY,MAX V
+GENERATION_ID,1560796609
+#
+#
+# Files generated for PWM_Lkup on 2019.06.17.11:36:49
+files:
+filepath,kind,attributes,module,is_top
+simulation/PWM_Lkup.vhd,VHDL,,PWM_Lkup,true
+simulation/submodules/PWM_Lkup_ufm_parallel_0.v,VERILOG,,PWM_Lkup_ufm_parallel_0,false
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+PWM_Lkup.ufm_parallel_0,PWM_Lkup_ufm_parallel_0

@@ -8,7 +8,7 @@
 --
 --  Author: JEFF OLSEN
 --  Created on: 12/2011
---  Last change: JPS 4/18/2018 2:37:17 PM
+--  Last change: JO 1/22/2018 2:37:17 PM
 --
 --
 
@@ -108,12 +108,13 @@ if (Reset = '1') then
 	iSLED_AC_Out_P	<= '0';
 	iSLED_AC_Out_M	<= '0';
 elsif (Clock'event and Clock = '1') then
+
 -----------------------------------------------------------------------------------
 ----------------------------------------------- Use this code block for TESTING 10 VAC output
-	if (Clk120HzEn = '1') then
-			iSLED_AC_Out_P <= not(iSLED_AC_Out_P);
-			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
-	end if;
+--	if (Clk120HzEn = '1') then
+--			iSLED_AC_Out_P <= not(iSLED_AC_Out_P);
+--			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+--	end if;
 -------------------------------------------------------------------------- 
 -----------------------------------------------Use the code block below for OPERATION
 ------------------------------------------ original operational code (bug?)
@@ -129,17 +130,17 @@ elsif (Clock'event and Clock = '1') then
 ----------------------------------------------
 -------------------------------- Modified code for OPERATION -- John Sikora June 14, 2018
 --
---	if (Clk120HzEn = '1') then
---		if ((Tuning = '1') or (DeTuning = '1')) then
---			iSLED_AC_Out_P <= not(iSLED_AC_Out_P);
---			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
---		else
---			iSLED_AC_Out_P	<= '0';
---			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
---		end if;
---	else
---
---	end if;
+	if (Clk120HzEn = '1') then
+		if ((Tuning = '1') or (DeTuning = '1')) then
+			iSLED_AC_Out_P <= not(iSLED_AC_Out_P);
+			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+		else
+			iSLED_AC_Out_P	<= '0';
+			iSLED_AC_Out_M	<= iSLED_AC_Out_P;
+		end if;
+	else
+
+	end if;
 -----------------------------------------------
 ---------------------------------------------------------------------------------- 
 end if;
@@ -185,13 +186,9 @@ if (Reset = '1') then
 	SLEDTimeOut 	<= '0';
 elsif (Clock'event and Clock = '1') then
 
---------------Original code ---------------
-	TuneReqSr		<= TuneReqSr(0)	& (TuneReq and NOT(DbSLEDTuned));
-	DeTuneReqSr	<= DeTuneReqSr(0) & (DeTuneReq and Not(DbSLEDDeTuned));
-	
-	 
-	 
-	 
+	 TuneReqSr		<= TuneReqSr(0)	& (TuneReq and NOT(DbSLEDTuned));
+	 DeTuneReqSr	<= DeTuneReqSr(0) & (DeTuneReq and Not(DbSLEDDeTuned));
+
     if ((SLEDTimeOut = '1') or (DbSLEDTuned = '1') or (ClrFault = '1')) then
 		  Tuning		<= '0';
     elsif (TuneReqSr = "01") then
@@ -199,7 +196,7 @@ elsif (Clock'event and Clock = '1') then
 		  DeTuning	<= '0';
     end if;
 
-	 if ((SLEDTimeOut = '1') or (DbSLEDDeTuned = '1') or (ClrFault = '1')) then
+    if ((SLEDTimeOut = '1') or (DbSLEDDeTuned = '1') or (ClrFault = '1')) then
 		  DeTuning	<= '0';
     elsif (DeTuneReqSr = "01") then
         Tuning		<= '0';
@@ -208,7 +205,7 @@ elsif (Clock'event and Clock = '1') then
 
 	if ((Tuning = '1') or (DeTuning = '1')) then
 		if (TimeOutEn = '1') then
-			if (TimeOutCntr /= x"63") then
+			if (TimeOutCntr /= x"13") then
 				TimeOutCntr <= TimeOutCntr + 1;
 			else
 				SLEDTimeOut <= '1';

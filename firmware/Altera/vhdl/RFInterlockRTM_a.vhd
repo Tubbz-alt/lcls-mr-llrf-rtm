@@ -8,13 +8,19 @@
 --
 --  Author: JEFF OLSEN
 --  Created on: 12/2011
---  Last change: JPS 4/13/2018 10:00 AM
+--  Last change: JO 1/9/2018 7:59:59 AM
 --
 --
 
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
+--
+--library PWM_LKUP;
+--use PWM_LKUP.all;
+--
+--library altera_mf;
+--use altera_mf.altera_mf_components.all; 
 
 entity RFInterlockRTM_a is
   port (
@@ -84,6 +90,8 @@ entity RFInterlockRTM_a is
     ByPass : in std_logic;
 
     TestPoint : out std_logic_vector(3 downto 0)
+	 
+--	 Reset : in std_logic
 
     );
 end RFInterlockRTM_a;
@@ -92,6 +100,7 @@ end RFInterlockRTM_a;
 architecture Behaviour of RFInterlockRTM_a is
 
   signal RegDataOut : std_logic_vector(15 downto 0);
+  signal Clk245KhzEn : std_logic;
   signal Clk10KhzEn : std_logic;
   signal Clk1KhzEn  : std_logic;
   signal Clk10hzEn  : std_logic;
@@ -136,15 +145,53 @@ architecture Behaviour of RFInterlockRTM_a is
   
 -- Test
 	signal TestCntr		: std_logic_vector(11 downto 0);
+	signal PulseCntr		: std_logic_vector(11 downto 0);
 	signal TestOut			: std_logic;
-
+	signal TestDout		: std_logic_vector(15 downto 0);
+	signal PWMDout		: std_logic_vector(15 downto 0);
+	
+	signal addr				: std_logic_vector(8 downto 0);
+	Signal nread     		: std_logic;      --      nread.nread
+	Signal nbusy      	: std_logic;     --      nbusy.nbusy
+	Signal sync_nbusy    : std_logic_vector(1 downto 0);     
+	Signal data_valid 	: std_Logic;   -- data_valid.data_valid
+	Signal sync_data_valid   : std_logic_vector(1 downto 0); 
+	signal PWM0_SR			: std_logic_vector(7 downto 0);
+	signal PWM1_SR			: std_logic_vector(7 downto 0);
+	signal PWMCntr			: std_logic_vector(2 downto 0);
+	signal PWMClkEn		: std_logic;
+	signal PWMStart		: std_logic;
+	
+	type PWMLkup_t is (
+		UFM_Idle_s,
+		UFM_Wait_s,
+		UFM_Data_s,
+		UFM_Shift_s
+		);
+		
+		signal PWMLkup_s : PWMLkup_t;
+		
+	
+		component PWM_Lkup is
+		port (
+			addr       : in  std_logic_vector(8 downto 0)  := (others => 'X'); -- addr
+			nread      : in  std_logic                     := 'X';             -- nread
+			dataout    : out std_logic_vector(15 downto 0);                    -- dataout
+			nbusy      : out std_logic;                                        -- nbusy
+			data_valid : out std_logic                                         -- data_valid
+		);
+	end component PWM_LKUP;
+	
 begin
 
 
---  TestPoint(3) 			<='0';
---  TestPoint(2) 			<=Clk120HzEn;
---  TestPoint(1) 			<=Clk1KhzEn;
---  TestPoint(0) 			<=Clk10KhzEn;
+	TestPoint(3) 			<= PWMStart;
+  TestPoint(2) 			<= nread;
+	TestPoint(1) 			<= PWM1_SR(0);
+  TestPoint( 0) 			<= PWM0_SR(0);
+  
+  SLED_AC_Out_P <= PWM0_SR(0);
+ SLED_AC_Out_M <= PWM1_SR(0);
 
   n_Mod_Spare_Out 	<='0';
 
@@ -165,13 +212,17 @@ begin
   RFOn_AMC	<= RFOn;
   RFOff		<= not(RFOn);
 
+--
 -- Comment out line below for test mode - JPS
---  Mod_Trigger_Out <= Mod_Trigger and not(iFault) and not(iMod_Fault) and not(Bypass) and not(PowerOn);
+  Mod_Trigger_Out <= Mod_Trigger and not(iFault) and not(iMod_Fault) and not(Bypass) and not(PowerOn);
 
- Mod_Trigger_Out <= TestOut; -- uncomment this line for test mode (see also SLED_Interface.vhd
+-- Mod_Trigger_Out <= TestOut; -- uncomment this line for test mode (see also SLED_Interface.vhd
 
 -- Test
 -- low = Interlock closed, good
+
+
+
   n_Ext_Intlk <= (SLEDFault or FastFault) and not(Bypass);
 
   n_Tune_En   <= not(Tune);
@@ -183,27 +234,27 @@ begin
   PowerOn <= not(PonLatch);
   
   
--- TEST
+-- TEST pulse generated for Mod Trigger "Test_Out" above (JPS)
 
-  test_p : process(Clock, Reset)
+  test_pulse : process(Clock, Reset)
   begin
 	if (Reset = '1') then
-		TestCntr <= (Others => '0');
+		PulseCntr <= (Others => '0');
 	elsif (Clock'event and Clock = '1') then
 		if (Clk120HzEn = '1') then
-			TestCntr <= x"177";  -- 375, 6us
---			TestCntr <= x"03E";  -- 62, 1us
---			TestCntr <= x"00A";  -- 10, 100ns
+--			PulseCntr <= x"177";  -- 375, 6us
+--			PulseCntr <= x"03E";  -- 62, 1us
+			PulseCntr <= x"00A";  -- 10, 100ns
 			TestOut  <= '1';
 		elsif (TestOut = '1') then
-			if (TestCntr = x"00") then
+			if (PulseCntr = x"00") then
 				TestOut <= '0';
 			else
-				TestCntr <= TestCntr -1;
+				PulseCntr <= PulseCntr -1;
 			end if;
-		end if;
+		end if;	
 	end if;
-end process;	
+  end process;	
 
 		
   Pon_p : process(Clock, Reset)
@@ -221,6 +272,7 @@ end process;
     port map (
       Clock      => Clock,
       Reset      => Reset,
+		Clk245KhzEn => Clk245KhzEn,
       Clk10KhzEn => Clk10KhzEn,
       Clk1KhzEn  => Clk1KhzEn,
       Clk200hzEn => Clk200hzEn,
@@ -281,8 +333,8 @@ end process;
 -- SLED Tune/Detune Request
 		TuneReq			=> Tune_Req,
 		DeTuneReq		=> DeTune_Req,
-		SLED_AC_Out_P	=> SLED_AC_Out_P,
-		SLED_AC_Out_M	=> SLED_AC_Out_M,
+--		SLED_AC_Out_P	=> SLED_AC_Out_P,
+--		SLED_AC_Out_M	=> SLED_AC_Out_M,
 
 -- Control Output
 		Tune				=> Tune,
@@ -326,14 +378,104 @@ end process;
       );
 
 
-  u_SysInfo : entity work.SysInfo
-    port map (
-      Clock => Clock,
-      Reset => Reset,
+	u_SysInfo : entity work.SysInfo
+		port map (
+			Clock => Clock,
+			Reset => Reset,
 
-      LittleEndian => '0',
-      Lnk_Addr     => SPIAddrOut,
-      Reg_DataOut  => SysInfoDataOut
-      );
+			LittleEndian => '0',
+			Lnk_Addr     => SPIAddrOut,
+			Reg_DataOut  => SysInfoDataOut
+	);
+
+-- TEST
+
+PWMClkEn <= CLK245KhzEn;
+
+  test_p : process(Clock, Reset)
+  begin
+	if (Reset = '1') then
+		PWMLkup_s 			<= UFM_Idle_s;
+		TestCntr 			<= (Others => '0');
+		nread 				<= '1';
+		Sync_data_valid 	<= (Others => '0');
+		sync_nbusy 			<= (Others => '0');
+		PWMCntr				<= (Others => '0');		
+		PWM0_SR				<= (Others => '0');
+		PWM1_SR				<= (Others => '0');
+		PWMStart				<= '0';
+		
+	elsif (Clock'event and Clock = '1') then
+		Sync_data_valid 	<= Sync_data_valid(0) & data_valid;
+		sync_nbusy 			<= sync_nbusy(0) & nbusy;
+		
+		case PWMLkup_s is
+	
+		when UFM_Idle_s =>
+		if ((PWMClkEn = '1') and (sync_nbusy(1) = '1')) then
+			nread 		<= '0';
+			PWMLkup_s 	<= UFM_Wait_s;
+		else
+			nread			<= '1';
+		end if;
+	
+		when UFM_Wait_s =>		
+			if (sync_nbusy(1) = '0') then
+				nread 		<= '1';
+				PWMLkup_s 	<= UFM_Data_s;	
+			end if; 
+			
+		when UFM_Data_s =>
+			if ((PWMClkEn = '1') and (Sync_data_valid(1) = '1')) then
+				if (testcntr(8 downto 0) = "000000000") then
+					PWMStart <= '1';
+				else
+					PWMStart <= '0';
+				end if;
+				
+				PWM0_SR			<= TestDout(7 downto 0);
+				PWM1_SR			<= TestDout(15 downto 8);				
+				TestCntr 		<= TestCntr + 1;
+				PWMCntr			<= "000";
+				PWMLkup_s 		<= UFM_Shift_s;
+		end if;
+		
+		
+		when UFM_Shift_s =>
+				if ((nread = '0') and (sync_nbusy(1) = '0')) then
+					nread <= '1';
+				end if;
+				
+			if (PWMClkEn = '1') then
+					PWM0_SR <= '0' & PWM0_SR(7 downto 1);
+					PWM1_SR <= '0' & PWM1_SR(7 downto 1);		
+				if (PWMCntr(2 downto 0) = "100")	then
+						nread <= '0';
+				end if;
+				
+					
+				if (PWMCntr(2 downto 0) = "110") then
+					PWMLkup_s <= UFM_Data_s;
+				else
+					PWMCntr <= PWMCntr +1;
+				end if;		
+			end if;
+		end case;
+	end if;
+end process;	
+	
+	
+	
+	addr <= TestCntr(8 downto 0);
+	
+	u0 : PWM_Lkup
+		port map (
+			addr       => addr,			--       addr.addr
+			nread      => nread,      --      nread.nread
+			dataout    => TestDout,    --    dataout.dataout
+			nbusy      => nbusy,      --      nbusy.nbusy
+			data_valid => data_valid  -- data_valid.data_valid
+		);
+
 
 end behaviour;

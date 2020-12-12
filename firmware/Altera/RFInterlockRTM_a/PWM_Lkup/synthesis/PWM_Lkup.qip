@@ -1,0 +1,51 @@
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_TOOL_NAME "Qsys"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_TOOL_VERSION "18.1"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -library "PWM_Lkup" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../PWM_Lkup.sopcinfo"]
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name SLD_INFO "QSYS_NAME PWM_Lkup HAS_SOPCINFO 1 GENERATION_ID 1560796611"
+set_global_assignment -library "PWM_Lkup" -name MISC_FILE [file join $::quartus(qip_path) "../PWM_Lkup.cmp"]
+set_global_assignment -library "PWM_Lkup" -name SLD_FILE [file join $::quartus(qip_path) "PWM_Lkup.debuginfo"]
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_TARGETED_DEVICE_FAMILY "MAX V"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_GENERATED_DEVICE_FAMILY "{MAX V}"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_QSYS_MODE "STANDALONE"
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -library "PWM_Lkup" -name MISC_FILE [file join $::quartus(qip_path) "../../PWM_Lkup.qsys"]
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_NAME "UFdNX0xrdXA="
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_DISPLAY_NAME "UFdNX0xrdXA="
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_REPORT_HIERARCHY "On"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_VERSION "MS4w"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTU2MDc5NjYxMQ==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::TUFYIFY=::QXV0byBERVZJQ0VfRkFNSUxZ"
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::NU0yMjEwWkYyNTZDNQ==::QXV0byBERVZJQ0U="
+set_global_assignment -entity "PWM_Lkup" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::NQ==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_NAME "UFdNX0xrdXBfdWZtX3BhcmFsbGVsXzA="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_DISPLAY_NAME "VXNlciBGbGFzaCBNZW1vcnkgZm9yIFBhcmFsbGVsIEludGVyZmFjZSBQcm90b2NvbCBJbnRlbCBGUEdBIElQ"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_VERSION "MTguMQ=="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_DESCRIPTION "VGhlIEFsdGVyYSBVc2VyIEZsYXNoIE1lbW9yeSBmb3IgUGFyYWxsZWwgSW50ZXJmYWNlIFByb3RvY29sIG1lZ2FmdW5jdGlvbiBpbXBsZW1lbnRzIHVzZXIgIG5vbi12b2xhdGlsZSBtZW1vcnkgZm9yIE1BWCBJSS9NYXggViBkZXZpY2VzIHVzaW5nIHRoZSBwYXJhbGxlbCBpbnRlcmZhY2UgcHJvdG9jb2wu"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "REVWSUNFX0ZBTUlMWQ==::TUFYIFY=::RGV2aWNlIGZhbWlseQ=="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "Q0JYX0FVVE9fQkxBQ0tCT1g=::QUxM::Q0JYX0FVVE9fQkxBQ0tCT1g="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "QUNDRVNTX01PREU=::UkVBRF9PTkxZ::QWNjZXNzIG1vZGU="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "V0lEVEhfQUREUkVTUw==::OQ==::J2FkZHInIHdpZHRo"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "V0lEVEhfREFUQQ==::MTY=::J2RhdGFpbicgd2lkdGg="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "T1NDX0NIRUNL::ZmFsc2U=::VXNlICdvc2MnIG91dHB1dCBwb3J0"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "T1NDRU5BX0NIRUNL::ZmFsc2U=::VXNlICdvc2NlbmEnIGlucHV0IHBvcnQ="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "R1VJX01FTV9JTklU::SW5pdGlhbGl6ZSBmcm9tIGhleCBvciBtaWYgZmlsZQ==::TWVtb3J5IGNvbnRlbnQgaW5pdGlhbGl6YXRpb24="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "TFBNX0ZJTEU=::QzovVXNlcnMvampvL09uZURyaXZlIC0gU0xBQyBOYXRpb25hbCBBY2NlbGVyYXRvciBMYWJvcmF0b3J5L1RJRF9BSVIvUHJvamVjdHMvTWlzc2lvblJlYWRpbmVzcy9SZkludGVybG9ja3MvQWx0ZXJhX0MwMi9SRkludGVybG9ja1JUTV9hL1BXTV9HRU5fSEVYLm1pZg==::RmlsZSBuYW1l"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "R1VJX09TQ19GUkVRVUVOQ1k=::NS41Ng==::T3NjaWxsYXRvciBmcmVxdWVuY3k="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "T1NDX0ZSRVFVRU5DWQ==::MTgwMDAw::T1NDX0ZSRVFVRU5DWQ=="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "R1VJX0VSQVNFX1RJTUU=::NTAwMDAw::RXJhc2UgdGltZQ=="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "RVJBU0VfVElNRQ==::NTAwMDAwMDAw::RVJBU0VfVElNRQ=="
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "R1VJX1BST0dSQU1fVElNRQ==::MTYwMA==::UHJvZ3JhbSB0aW1l"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "UFJPR1JBTV9USU1F::MTYwMDAwMA==::UFJPR1JBTV9USU1F"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_COMPONENT_PARAMETER "V0lEVEhfVUZNX0FERFJFU1M=::OQ==::V0lEVEhfVUZNX0FERFJFU1M="
+
+set_global_assignment -library "PWM_Lkup" -name VHDL_FILE [file join $::quartus(qip_path) "PWM_Lkup.vhd"]
+set_global_assignment -library "PWM_Lkup" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/PWM_Lkup_ufm_parallel_0.v"]
+
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_TOOL_NAME "altera_ufm_parallel"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_TOOL_VERSION "18.1"
+set_global_assignment -entity "PWM_Lkup_ufm_parallel_0" -library "PWM_Lkup" -name IP_TOOL_ENV "Qsys"

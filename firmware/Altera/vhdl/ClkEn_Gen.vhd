@@ -50,6 +50,7 @@ entity ClkEn_Gen is
   port (
     Clock      : in  std_logic;
     Reset      : in  std_logic;
+	 Clk245KhzEn : out std_logic;
     Clk10KhzEn : out std_logic;
     Clk1KhzEn  : out std_logic;
     Clk200hzEn : out std_logic;
@@ -59,6 +60,14 @@ entity ClkEn_Gen is
 end ClkEn_Gen;
 
 architecture Behavioral of ClkEn_Gen is
+
+-- FR RTM clk = 125Mhz
+
+
+
+ signal Clk245khzCntr : std_logic_vector(11 downto 0);
+  signal iClk245KhzEn  : std_logic;
+
 
   signal Clk10khzCntr : std_logic_vector(15 downto 0);
   signal iClk10KhzEn  : std_logic;
@@ -78,15 +87,19 @@ architecture Behavioral of ClkEn_Gen is
 
 begin
 
+	Clk245KhzEn <= iClk245KhzEn;
+
   Clk10KHzEn <= iClk10KHzEn;
   Clk1KHzEn  <= iClk1KHzEn;
   Clk200hzEn <= iClk200hzEn;
   Clk10hzEn  <= iClk10hzEn;
-  Clk120hzEn <= iClk120HzEn;
+	clk120hzEn <= iClk120HzEn;
 
   ClkGen : process(Clock, Reset)
   begin
     if (Reset = '1') then
+		clk245khzcntr <= (others => '0');
+		iclk245khzEn <= '0';
       clk10khzCntr <= (others => '0');
       iClk10khzEn  <= '0';
       clk1khzCntr  <= (others => '0');
@@ -99,11 +112,20 @@ begin
       Clk120HzCntr <= (others => '0');
 			
     elsif (Clock'event and Clock = '1') then
+	 	iclk245khzEn <= '0';
       iClk10KhzEn <= '0';
       iClk1KhzEn  <= '0';
       iClk10HzEn  <= '0';
       iClk200HzEn <= '0';
 		iClk120hzEn  <= '0';
+		
+				
+     if (Clk245KhzCntr = x"1EC") then  
+        Clk245KhzCntr <= (others => '0');
+        iClk245KhzEn  <= '1';
+      else
+        Clk245KhzCntr <= clk245khzCntr + 1;
+      end if;
 
       if (Clk10KhzCntr = x"30d3") then  
         Clk10KhzCntr <= (others => '0');

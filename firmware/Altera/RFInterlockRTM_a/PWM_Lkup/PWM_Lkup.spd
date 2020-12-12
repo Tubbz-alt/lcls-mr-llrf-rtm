@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="simulation/submodules/PWM_Lkup_ufm_parallel_0.v"
+   type="VERILOG"
+   library="ufm_parallel_0" />
+ <file path="simulation/PWM_Lkup.vhd" type="VHDL" />
+ <topLevel name="PWM_Lkup" />
+ <deviceFamily name="maxv" />
+</simPackage>

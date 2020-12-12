@@ -39,13 +39,8 @@ set_time_format -unit ns -decimal_places 3
 # Create Clock
 #**************************************************************
 
-create_clock -name {clock} \
-	     -period 8.000 \
-	     [get_ports {Clock}]
+create_clock -name {clock} -period 8.000 -waveform { 0.000 4.000 } [get_ports {Accel_Trig Beam_I_Over Beam_V_Over Clock ClrFault Cmd_Clk Cmd_SDI Cmd_SDO FaultOut Fwd_Over Mod_Fault Mode RTM_In1 RTM_Out0 RTM_Out1 Refl_Over Slow_In0 Slow_In1 Slow_Out0 Slow_Out1 Spare_In Spare_Out StndBy_Trig TestPoint[0] TestPoint[1] TestPoint[2] TestPoint[3] n_Beam_I_Under n_Cmd_CS n_DeTune n_DeTune_Req n_Ext_Intlk n_Lower_Detuned n_Lower_Tuned n_Mod_Trigger n_Motor_Not_Detuned n_Motor_Not_Tuned n_RFOFF n_Tune n_Tune_Req n_Upper_Detuned n_Upper_Tuned}]
 
-create_clock -name {CMD_CLK}\
-	     -period 20.0 \
-	     [get_ports {Cmd_Clk}]
 
 #**************************************************************
 # Create Generated Clock
